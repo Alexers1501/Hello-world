@@ -1,5 +1,6 @@
 #include <iostream>//подключение заголовочных файлов
 #include <cmath>
+#include <iomanip>//компановка или верстка
 int main()
 {
 	std::cout << "Будем табулировать синус" << std::endl;
@@ -12,9 +13,18 @@ int main()
 	double step;
 	std::cin >> step;;
 
+	std::cout <<
+			"	x	|	sin(x)\n"
+			"-----------------\n";
+
+	std::cout << std::fixed;
+
 	for (double x = start; x <= end; x += step){
 		double  y = sin(x);
-		std::cout << x << '|' << y << std::endl;
+		std::cout <<
+				std::setw(14) << std::setprecision(3) << x <<//setpreс сколько знаков после точки
+				'|' <<
+				std::setw(14) << std::setprecision(3) << y << std::endl;
 	}
 
 	return 0;
