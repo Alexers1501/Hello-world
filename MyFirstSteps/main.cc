@@ -26,26 +26,13 @@ int main()
 	double start, end, step;
 	std::string input;
 
-	std::cout << "Введите начало и конец промежутка";
-	std::getline(std::cin, input);
-	std::stringstream start_end_string {input};// из строки сделали поток
-	start_end_string >> start>> end;
-	if (start_end_string.fail()) {
-		std::cerr << "Неверный вввод!" << std::endl;
-		return 1;
-	}
-
+	start = read_double("Введите начало промежутка: ");
+	end = read_double("Введите конец промежутка");
 
 	if (start > end) std::swap(start, end);// algorithm package, поменять переменные местами
 
-	std::cout << "Введите шаг";
-	std::getline(std::cin, input);
-	std::stringstream step_string {input};
-	step_string>> step;;
-	if (step_string.fail()) {
-			std::cerr << "Неверно указан шаг!" << std::endl;
-			return 1;
-		}
+	step = read_double("Введите шаг");
+
 	if (step <= 0.){
 		std::cerr << "Шаг должен быть положителдьным!" <<std::endl;
 		return 1;
