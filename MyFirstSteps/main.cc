@@ -1,7 +1,7 @@
 #include <iostream>//подключение заголовочных файлов
 int main()
 {
-	std::cout << "Hello World" << std::endl;
+	std::cout << "Всем ПРИВЕТ!" << std::endl;
 	return 0;
 }
 
