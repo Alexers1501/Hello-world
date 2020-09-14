@@ -1,31 +1,70 @@
 #include <iostream>//подключение заголовочных файлов
 #include <cmath>
 #include <iomanip>//компановка или верстка
-#include <complex>
+#include <algorithm>
+#include <string>
+#include <sstream>
 
-constexpr double EPS = 0.0001;//предельная ошибка
+double read_double(const char * prompt)	{
+	double result;	//
+	std::string input;			//хранилище для вводной строки
+	std::cout << prompt;		//вывод запроса
+	std::getline(std::cin, input);//ввод строки
+	std::stringstream input_ss {input};//создание потока
+	input_ss >> result;				//чтерние
+	if (input_ss.fail()){//если не получилось
+		std::cerr<< "Неверный формат вещественного числа!" << std::endl;
+		exit(1);				//аварийно завершаем работу
+	}
+	return result;				//выводим результат
+}
 
 int main()
 {
-	std::cout << "Будем решать квадратное уравнение" << std::endl;
+	std::cout << "Будем табулировать синус" << std::endl;
 
-	std::cout << "ax^2+bx+c=0" << std::endl;
-	std::cout << "Введите коэффициенты a, b, c";
-	std::complex <double> a, b, c;
-	std::cin >> a >> b >> c;
+	double start, end, step;
+	std::string input;
 
-	std::complex <double> d;
-	d = b*b - 4.*a*c;
-
-	//else(d == 0){}// Never do it!!! It is double
-	if (d.real() < EPS and d.real() > -EPS){//This is 0 part or segment!
-		std::cout << "x = " <<(-b/2. /a) << std::endl;
+	std::cout << "Введите начало и конец промежутка";
+	std::getline(std::cin, input);
+	std::stringstream start_end_string {input};// из строки сделали поток
+	start_end_string >> start>> end;
+	if (start_end_string.fail()) {
+		std::cerr << "Неверный вввод!" << std::endl;
+		return 1;
 	}
-	else{
+
+
+	if (start > end) std::swap(start, end);// algorithm package, поменять переменные местами
+
+	std::cout << "Введите шаг";
+	std::getline(std::cin, input);
+	std::stringstream step_string {input};
+	step_string>> step;;
+	if (step_string.fail()) {
+			std::cerr << "Неверно указан шаг!" << std::endl;
+			return 1;
+		}
+	if (step <= 0.){
+		std::cerr << "Шаг должен быть положителдьным!" <<std::endl;
+		return 1;
+	}
+
+	std::cout <<
+			"	x	|	sin(x)\n"
+			"-----------------\n";
+
+	std::cout << std::fixed;
+
+	for (double x = start; x <= end; x += step){
+		double  y = sin(x);
 		std::cout <<
-				"x1 = " << ((-b-sqrt(d))/2.  /a) << std::endl <<
-				"x2 = " << ((-b+sqrt(d))/2. /a) << std::endl;
+				std::setw(14) << std::setprecision(3) << x <<//setpreс сколько знаков после точки
+				'|' <<
+				std::setw(14) << std::setprecision(3) << y << std::endl;
 	}
+
 	return 0;
 }
 
